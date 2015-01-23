@@ -1,0 +1,10 @@
+{
+  "name": "memebot-hipchat",
+  "version": "0.0.1",
+  "main": "index.js",
+  "author": "Christian Hoffmeister <mail@choffmeister.de>",
+  "license": "MIT",
+  "dependencies": {
+    "node-rest-client": "^1.4.4"
+  }
+}
