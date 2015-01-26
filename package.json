@@ -5,6 +5,7 @@
   "author": "Christian Hoffmeister <mail@choffmeister.de>",
   "license": "MIT",
   "dependencies": {
+    "lodash": "^2.4.1",
     "node-rest-client": "^1.4.4"
   }
 }
