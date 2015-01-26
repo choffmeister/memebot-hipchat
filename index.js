@@ -1,11 +1,14 @@
-var RestClient = new require('node-rest-client').Client;
+var util = require('util'),
+    RestClient = new require('node-rest-client').Client;
 
 var config = {
   giphy: {
+    url: 'http://api.giphy.com/v1/gifs/search?q=%s&api_key=%s',
     token: 'dc6zaTOxFJmzC', // public beta token
     search: 'family+guy' // what to search giphy for
   },
   hipChat: {
+    url: 'https://api.hipchat.com/v2/room/%s/notification?auth_token=%s',
     token: '', // fill
     room: '' // fill
   }
@@ -18,8 +21,11 @@ var random = function (arr) {
 };
 
 var client = new RestClient();
-client.get('http://api.giphy.com/v1/gifs/search?q=' + config.giphy.search + '&api_key=' + config.giphy.token, function(data1, res1){
-  var imageUrl = random(data1.data).images.original.url;
+var giphyUrl = util.format(config.giphy.url, config.giphy.search, config.giphy.token);
+var hipChatUrl = util.format(config.hipChat.url, config.hipChat.room, config.hipChat.token);
+
+client.get(giphyUrl, function(giphyData, giphyRes){
+  var imageUrl = random(giphyData.data).images.original.url;
 
   var messageArgs = {
     data: {
@@ -34,7 +40,7 @@ client.get('http://api.giphy.com/v1/gifs/search?q=' + config.giphy.search + '&ap
     }
   };
 
-  client.post('https://api.hipchat.com/v2/room/' + config.hipChat.room + '/notification?auth_token=' + config.hipChat.token, messageArgs, function (data2, res2) {
+  client.post(hipChatUrl, messageArgs, function (hipChatData, hipChatRes) {
     // do nothing
   });
 });
